@@ -24,7 +24,7 @@ The scripts in this repository depend on [SoX](http://sox.sourceforge.net/), a c
 	winget install sox
 	```
 
-2. Add the path of the `sox.exe` executable to Windows Path environment variable by running the command below in Command Prompt:
+2. Add the path of the `sox.exe` executable to Windows Path environment variable by running the command below:
 
 	```pwsh
 	cmd /c 'setx Path "%Path%;%ProgramFiles(x86)%\sox-14-4-2"'
