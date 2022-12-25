@@ -6,7 +6,7 @@ All converted files will be in the new subdirectory `converted` inside the direc
 ## Usage
 
 ```
-silencer [path] [start(s)] [end(s)]
+silencer [path] [start(s)] [end(s)] [overwrite]
 ```
 
 ## Why?

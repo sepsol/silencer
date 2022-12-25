@@ -20,17 +20,25 @@ if (!$?) {
 }
 
 
-if ("$path".EndsWith(".mp3")) {
-	$parentPath = Resolve-Path "$path\.."
-	$modified = "$parentPath\modified"
-	New-Item -ItemType Directory -Force -Path "$modified"
-	Write-Host
-	
-	$file = Get-Item "$path"
+function Add-Silence {
+	Param(
+		[System.io.FileInfo]	$file,
+		[String]				$modifiedPath,
+		[Int]					$fileIndex 		= 1,	# NOT zero-indexed
+		[Int]					$filesCount 	= 1
+	)
 
-	Write-Host "[1/1] ""$($file.FullName)""" -ForegroundColor Cyan
+	Write-Host "[$fileIndex/$filesCount] ""$($file.FullName)""" -ForegroundColor Blue
 	Write-Host "`Adding silence..." -ForegroundColor Gray
-	sox "$($file.FullName)" "$modified\$($file.Name)" pad $start $end
+
+	$inputFile = "$($file.FullName)"
+	if ($overwrite -eq $true) {
+		$outputFile = "$inputFile"
+	} else {
+		$outputFile = "$modifiedPath\$($file.Name)"
+	}
+	
+	sox -V1 "$inputFile" "$outputFile" pad $start $end
 
 	if ($?) {
 		Write-Host "`tSuccessfully modified file" -ForegroundColor Green
@@ -38,36 +46,34 @@ if ("$path".EndsWith(".mp3")) {
 		Write-Host "`tUnable to modify file" -ForegroundColor Red
 	}
 	Write-Host
+}
+
+if ("$path".EndsWith(".mp3")) {
+	$file = Get-Item "$path"
+	$parentPath = Resolve-Path "$path\.."
+	$modifiedPath = "$parentPath\modified"
+	New-Item -ItemType Directory -Force -Path "$modifiedPath"
+	Write-Host
+
+	Add-Silence $file $modifiedPath
 
 	Write-Host "SUCCESS!" -ForegroundColor Green
 	Write-Host
-	Write-Host "To view the modified file(s) go to ""$modified"""
+	Write-Host "To view the modified file(s) go to ""$modifiedPath"""
 } else {
 	$files = Get-ChildItem "$path" -Filter *.mp3
-	
 	if ($files.Count -gt 0) {
-		$modified = "$path\modified"
-		New-Item -ItemType Directory -Force -Path "$modified"
+		$modifiedPath = "$path\modified"
+		New-Item -ItemType Directory -Force -Path "$modifiedPath"
 		Write-Host
 	
 		for ($i = 0; $i -lt $files.Count; $i++) {
-			$file = $files[$i]
-			Write-Host "[$($i + 1)/$($files.Count)] ""$($file.FullName)""" -ForegroundColor Cyan
-			Write-Host "`tAdding silence..." -ForegroundColor Gray
-			sox -V1 "$($file.FullName)" "$modified\$($file.Name)" pad $start $end
-	
-			if ($?) {
-				Write-Host "`tSuccessfully modified file" -ForegroundColor Green
-			} else {
-				Write-Host "`tUnable to modify file" -ForegroundColor Red
-			}
-			Write-Host
+			Add-Silence $files[$i] $modifiedPath ($i+1) ($files.Count)
 		}
 	
 		Write-Host "SUCCESS!" -ForegroundColor Green
 		Write-Host
-		Write-Host "Modified all $($files.Count) .mp3 file(s) in ""$path"""
-		Write-Host "To view the modified file(s) go to ""$modified"""
+		Write-Host "To view the modified file(s) go to ""$modifiedPath"""
 	} else {
 		Write-Host "Nothing to modify!"
 		Write-Host "ABORTING..."
