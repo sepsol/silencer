@@ -1,28 +1,33 @@
 # Silencer
-The scripts in this repository leverage [SoX](http://sox.sourceforge.net/) to add `300 ms` of silence to the beginning and `100 ms` of silence to the end of an existing `.mp3` file.
+The scripts in this repository leverage [SoX](http://sox.sourceforge.net/) to add (by default) `300 ms` of silence to the beginning and `100 ms` of silence to the end of existing .mp3 file(s).
 
 All converted files will be in the new subdirectory `converted` inside the directory where this script is executed; the original files will remain untouched.
 
 ## Usage
 
 ```
-silencer [start(s)] [end(s)] [path]
+silencer [path] [start(s)] [end(s)]
 ```
 
-## Installing dependancies
+## Why?
+If you've ever tried to use a bluetooth headphone to listen to a short sound (like a pronounciation of a word) being played from your device, you know that the beginning of the audio gets cut during transmition. That is by design since the bluetooth headphones go into sleep to preserve battery and when you want to play an audio file, there'll be a small lag before they connect back to your device and play the sound.
+
+The added silence by the scripts in this repository, help resolve this issue by giving your headphones a couple of more seconds of silence before playing the important part of your audio file.
+
+## Before you run the scripts
 The scripts in this repository depend on [SoX](http://sox.sourceforge.net/), a cross-platform (Windows, Linux, MacOS X, etc.) command line utility to manipulate audio files.
 
-### Windows
+#### Windows
 1. Run the command below to install SoX:
 
-	```cmd
+	```pwsh
 	winget install sox
 	```
 
 2. Add the path of the `sox.exe` executable to Windows Path environment variable by running the command below in Command Prompt:
 
-	```cmd
-	setx Path "%Path%;%ProgramFiles(x86)%\sox-14-4-2"
+	```pwsh
+	cmd /c setx Path "%Path%;%ProgramFiles(x86)%\sox-14-4-2"
 	```
 
 	Now, the `sox` command should work inside your terminal.
@@ -32,7 +37,16 @@ The scripts in this repository depend on [SoX](http://sox.sourceforge.net/), a c
 
 	Extract the Zip file and move `libmad-0.dll` and `libmp3lame-0.dll` files to the directory where your `sox.exe` file is located.
 
-### Linux
+4. Finally, download the `.ps1` script in this repository and put it somewhere in your computer like `%UserProfile%`. Then, edit your profile by running `notepad $profile` and paste this line there:
+
+	```pwsh
+	# $profile
+	Set-Alias -Name silencer -Value "$env:UserProfile\silencer.ps1"
+	```
+
+	Now, you should be able to call `silencer` from your terminal.
+
+#### Linux
 1. Run the command below to install SoX:
 
 	```sh
@@ -47,7 +61,16 @@ The scripts in this repository depend on [SoX](http://sox.sourceforge.net/), a c
 	sudo apt install libsox-fmt-mp3
 	```
 
-### macOS
+3. Finally, download the `.sh` script in this repository and put it somewhere in your computer like `~`. Then, modify your profile by calling `nano ~/.bashrc` and paste this line there:
+
+	```sh
+	# ~/.bashrc
+	alias='bash ~/silencer.sh'
+	```
+
+	Now, you should be able to call `silencer` from your terminal.
+
+#### macOS
 _TODO_
 
 ## Credits
