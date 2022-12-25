@@ -1,5 +1,5 @@
 # Silencer
-The scripts in this repository leverage [SoX](http://sox.sourceforge.net/) to add (by default) `300 ms` of silence to the beginning and `100 ms` of silence to the end of existing .mp3 file(s).
+The scripts in this repository leverage [SoX](http://sox.sourceforge.net/) to add (by default) `400 ms` of silence to the beginning and `400 ms` of silence to the end of existing .mp3 file(s).
 
 All converted files will be in the new subdirectory `converted` inside the directory where this script is executed; the original files will remain untouched.
 

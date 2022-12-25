@@ -24,7 +24,7 @@ for dir in *; do
 				
 				for i in *.mp3; do
 					echo "Converting Input File: \"./$dir/$i\"..."
-					sox -V1 "$i" "../converted/$dir/$i" pad 1 1
+					sox -V1 "$i" "../converted/$dir/$i" pad 0.4 0.4
 					
 					if [ $? -eq 0 ]; then
 						echo "Successfully converted File \"./$dir/$i\"."

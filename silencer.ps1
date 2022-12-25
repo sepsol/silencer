@@ -2,8 +2,8 @@
 
 Param(
 	$path = ".",
-	$start = 0.3,	# seconds
-	$end = 0.1		# seconds
+	$start = 0.4,	# seconds
+	$end = 0.4		# seconds
 )
 
 Write-Host
