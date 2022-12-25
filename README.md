@@ -27,7 +27,7 @@ The scripts in this repository depend on [SoX](http://sox.sourceforge.net/), a c
 2. Add the path of the `sox.exe` executable to Windows Path environment variable by running the command below in Command Prompt:
 
 	```pwsh
-	cmd /c setx Path "%Path%;%ProgramFiles(x86)%\sox-14-4-2"
+	cmd /c 'setx Path "%Path%;%ProgramFiles(x86)%\sox-14-4-2"'
 	```
 
 	Now, the `sox` command should work inside your terminal.
