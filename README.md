@@ -44,7 +44,7 @@ The scripts in this repository depend on [SoX](http://sox.sourceforge.net/), a c
 	Set-Alias -Name silencer -Value "$env:UserProfile\silencer.ps1"
 	```
 
-	Now, you should be able to call `silencer` from your terminal.
+	Now, source your shell by calling `. $profile` to apply the changes. After that, you should be able to call `silencer` from your terminal.
 
 #### Linux
 1. Run the command below to install SoX:
@@ -68,7 +68,7 @@ The scripts in this repository depend on [SoX](http://sox.sourceforge.net/), a c
 	alias='bash ~/silencer.sh'
 	```
 
-	Now, you should be able to call `silencer` from your terminal.
+	Now, source your shell by calling `. ~/.bashrc` to apply the changes. After that, you should be able to call `silencer` from your terminal.
 
 #### macOS
 _TODO_
