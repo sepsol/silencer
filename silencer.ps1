@@ -63,6 +63,7 @@ if ("$path".EndsWith(".mp3")) {
 	Write-Host "SUCCESS!" -ForegroundColor Green
 	Write-Host
 	Write-Host "To view the modified file(s) go to ""$modifiedPath"""
+	Write-Host
 } else {
 	$files = Get-ChildItem "$path" -Filter *.mp3
 	if ($files.Count -gt 0) {
@@ -80,9 +81,11 @@ if ("$path".EndsWith(".mp3")) {
 		Write-Host "SUCCESS!" -ForegroundColor Green
 		Write-Host
 		Write-Host "To view the modified file(s) go to ""$modifiedPath"""
+		Write-Host
 	} else {
-		Write-Host "Nothing to modify!"
+		Write-Host "Nothing to modify!" -ForegroundColor Yellow
 		Write-Host "ABORTING..."
+		Write-Host
 		exit 1
 	}
 }
