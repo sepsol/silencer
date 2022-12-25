@@ -52,8 +52,11 @@ if ("$path".EndsWith(".mp3")) {
 	$file = Get-Item "$path"
 	$parentPath = Resolve-Path "$path\.."
 	$modifiedPath = "$parentPath\modified"
-	New-Item -ItemType Directory -Force -Path "$modifiedPath"
-	Write-Host
+
+	if ($overwrite -eq $false) {
+		New-Item -ItemType Directory -Force -Path "$modifiedPath"
+		Write-Host
+	}
 
 	Add-Silence $file $modifiedPath
 
@@ -64,8 +67,11 @@ if ("$path".EndsWith(".mp3")) {
 	$files = Get-ChildItem "$path" -Filter *.mp3
 	if ($files.Count -gt 0) {
 		$modifiedPath = "$path\modified"
-		New-Item -ItemType Directory -Force -Path "$modifiedPath"
-		Write-Host
+
+		if ($overwrite -eq $false) {
+			New-Item -ItemType Directory -Force -Path "$modifiedPath"
+			Write-Host
+		}
 	
 		for ($i = 0; $i -lt $files.Count; $i++) {
 			Add-Silence $files[$i] $modifiedPath ($i+1) ($files.Count)
