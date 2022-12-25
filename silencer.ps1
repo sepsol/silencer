@@ -1,9 +1,10 @@
 #!/usr/bin/env pwsh
 
 Param(
-	$path = ".",
-	$start = 0.4,	# seconds
-	$end = 0.4		# seconds
+	[String]	$path 		= ".",
+	[Decimal]	$start 		= 0.4,		# seconds
+	[Decimal]	$end 		= 0.4,		# seconds
+	[Switch]	$overwrite 	= $false
 )
 
 Write-Host
