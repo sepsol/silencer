@@ -13,8 +13,8 @@ Write-Host
 
 $path = Resolve-Path "$path"
 if (!$?) {
-	Write-Host("Path does not exist.")
-	Write-Host("ABORTING...")
+	Write-Host "Path does not exist."
+	Write-Host "ABORTING..."
 	Write-Host
 	exit 1
 }
@@ -24,12 +24,15 @@ function Add-Silence {
 	Param(
 		[System.io.FileInfo]	$file,
 		[String]				$modifiedPath,
-		[Int]					$fileIndex 		= 1,	# NOT zero-indexed
-		[Int]					$filesCount 	= 1
+		[Int]					$fileIndex,		# NOT zero-indexed
+		[Int]					$filesCount
 	)
 
-	Write-Host "[$fileIndex/$filesCount] ""$($file.FullName)""" -ForegroundColor Blue
-	Write-Host "`tAdding silence..." -ForegroundColor Gray
+	if ($fileIndex -and $filesCount) {
+		Write-Host "[$fileIndex/$filesCount] " -ForegroundColor Blue -NoNewLine
+	}
+	Write-Host """$($file.FullName)""" -ForegroundColor Blue
+	Write-Host "`tAdding silence..."
 
 	$inputFile = "$($file.FullName)"
 	if ($overwrite -eq $true) {
@@ -41,9 +44,9 @@ function Add-Silence {
 	sox -V1 "$inputFile" "$outputFile" pad $start $end
 
 	if ($?) {
-		Write-Host "`tSuccessfully modified file" -ForegroundColor Green
+		Write-Host "`tSuccessfully modified the file" -ForegroundColor Green
 	} else {
-		Write-Host "`tUnable to modify file" -ForegroundColor Red
+		Write-Host "`tUnable to modify the file" -ForegroundColor Red
 	}
 	Write-Host
 
