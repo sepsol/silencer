@@ -77,7 +77,7 @@ if ("$path".EndsWith(".mp3")) {
 		}
 	
 		for ($i = 0; $i -lt $files.Count; $i++) {
-			$outputFile = Add-Silence $files[$i] $modifiedPath ($i+1) ($files.Count)
+			$outputFile = Add-Silence $files[$i] $modifiedPath ($i + 1) ($files.Count)
 		}
 	
 		Write-Host "SUCCESS!" -ForegroundColor Green
