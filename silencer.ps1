@@ -29,7 +29,7 @@ function Add-Silence {
 	)
 
 	Write-Host "[$fileIndex/$filesCount] ""$($file.FullName)""" -ForegroundColor Blue
-	Write-Host "`Adding silence..." -ForegroundColor Gray
+	Write-Host "`tAdding silence..." -ForegroundColor Gray
 
 	$inputFile = "$($file.FullName)"
 	if ($overwrite -eq $true) {
@@ -46,6 +46,8 @@ function Add-Silence {
 		Write-Host "`tUnable to modify file" -ForegroundColor Red
 	}
 	Write-Host
+
+	return $outputFile
 }
 
 if ("$path".EndsWith(".mp3")) {
@@ -58,11 +60,11 @@ if ("$path".EndsWith(".mp3")) {
 		Write-Host
 	}
 
-	Add-Silence $file $modifiedPath
+	$outputFile = Add-Silence $file $modifiedPath
 
 	Write-Host "SUCCESS!" -ForegroundColor Green
 	Write-Host
-	Write-Host "To view the modified file(s) go to ""$modifiedPath"""
+	Write-Host "To view the modified file open ""$outputFile"""
 	Write-Host
 } else {
 	$files = Get-ChildItem "$path" -Filter *.mp3
@@ -75,12 +77,12 @@ if ("$path".EndsWith(".mp3")) {
 		}
 	
 		for ($i = 0; $i -lt $files.Count; $i++) {
-			Add-Silence $files[$i] $modifiedPath ($i+1) ($files.Count)
+			$outputFile = Add-Silence $files[$i] $modifiedPath ($i+1) ($files.Count)
 		}
 	
 		Write-Host "SUCCESS!" -ForegroundColor Green
 		Write-Host
-		Write-Host "To view the modified file(s) go to ""$modifiedPath"""
+		Write-Host "To view the modified file(s) go to ""$(Resolve-Path "$outputFile\..")"""
 		Write-Host
 	} else {
 		Write-Host "Nothing to modify!" -ForegroundColor Yellow
